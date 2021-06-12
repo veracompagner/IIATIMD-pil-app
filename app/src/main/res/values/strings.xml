@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">PilReminderApp</string>
+
+    <string-array name="medications_names">
+        <item>Anticonceptie</item>
+        <item>Antibiotica</item>
+        <item>Vitamine B</item>
+        <item>Vitamine D</item>
+
+    </string-array>
+
+    <string-array name="beschrijving">
+        <item>BLA BLA BLA </item>
+        <item>BLA BLA BLA </item>
+        <item>BLA BLA BLA </item>
+        <item>BLA BLA BLA </item>
+    </string-array>
 </resources>
