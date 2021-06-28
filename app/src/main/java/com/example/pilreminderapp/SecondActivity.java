@@ -37,7 +37,6 @@ public class SecondActivity extends AppCompatActivity {
 
         } else {
             Toast.makeText(this, "No data.", Toast.LENGTH_SHORT).show();
-            //Log.d("fout", );
         }
 
     }

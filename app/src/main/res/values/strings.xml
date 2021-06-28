@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">PilReminderApp</string>
+    <string name="middelButton">Pil overzicht</string>
+    <string name="rechterButton">FAQ</string>
+    <string name="linkerButton">Kalender</string>
 
     <string-array name="medications_names">
         <item>Anticonceptie</item>

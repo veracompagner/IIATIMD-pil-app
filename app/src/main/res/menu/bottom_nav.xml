@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/nav_kalender"
+        android:icon="@drawable/ic_baseline_calendar_today_24"
+        android:title="@string/linkerButton"/>
+
+    <item
+        android:id="@+id/nav_pil_overzicht"
+        android:icon="@drawable/ic_baseline_scatter_plot_24"
+        android:title="@string/middelButton"/>
+
+    <item
+        android:id="@+id/nav_FAQ"
+        android:icon="@drawable/ic_baseline_not_listed_location_24"
+        android:title="@string/rechterButton"/>
+
+</menu>

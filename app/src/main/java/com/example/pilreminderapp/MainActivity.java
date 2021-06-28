@@ -1,37 +1,57 @@
 package com.example.pilreminderapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-
-    String s1[], s2[];
-    //hard code ophalen van afbeeldingen van medicatie
-    int image[] = {R.drawable.pil1,R.drawable.pil2,R.drawable.pil3,R.drawable.pil4};
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.medicationRecyclerView);
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-
-        //hard code ophalen van de medicatie (die moet vanaf een database komen nog)
-        s1 = getResources().getStringArray(R.array.medications_names);
-        s2 = getResources().getStringArray(R.array.beschrijving);
-
-        MedicationAdapter medicationAdapter = new MedicationAdapter(this, s1, s2, image);
-        recyclerView.setAdapter(medicationAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PiloverzichtFragment(this)).commit();
     }
 
+    private PiloverzichtFragment setPiloverzichtFragment(){
+        PiloverzichtFragment piloverzichtFragment = new PiloverzichtFragment(this);
+        return piloverzichtFragment;
+    }
+
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    Fragment selectedFragment = null;
+
+                    switch (item.getItemId()){
+                        case R.id.nav_kalender:
+                            selectedFragment = new KalenderFragment();
+                            break;
+                        case R.id.nav_pil_overzicht:
+                            selectedFragment = setPiloverzichtFragment();
+                            break;
+                        case R.id.nav_FAQ:
+                            selectedFragment = new FaqFragment();
+                            break;
+                    }
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+
+                    return true;
+
+                }
+            };
 
 }
