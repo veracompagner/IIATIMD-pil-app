@@ -12,6 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -21,12 +22,21 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PiloverzichtFragment(this)).commit();
+
     }
 
     private PiloverzichtFragment setPiloverzichtFragment(){
         PiloverzichtFragment piloverzichtFragment = new PiloverzichtFragment(this);
         return piloverzichtFragment;
     }
+
+    private FaqFragment setFaqFragment(){
+        FaqFragment faqFragment = new FaqFragment(this);
+        return faqFragment;
+    }
+
+
+
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -43,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = setPiloverzichtFragment();
                             break;
                         case R.id.nav_FAQ:
-                            selectedFragment = new FaqFragment();
+                            selectedFragment =  setFaqFragment();
                             break;
                     }
 

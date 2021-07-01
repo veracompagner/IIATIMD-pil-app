@@ -3,6 +3,7 @@
     <string name="middelButton">Pil overzicht</string>
     <string name="rechterButton">FAQ</string>
     <string name="linkerButton">Kalender</string>
+    <string name="Door">--></string>
 
     <string-array name="medications_names">
         <item>Anticonceptie</item>
@@ -11,6 +12,23 @@
         <item>Vitamine D</item>
 
     </string-array>
+
+    <string-array name="question_names">
+        <item>Vraag 1</item>
+        <item>Vraag 2</item>
+        <item>Vraag 3</item>
+        <item>Vraag 4</item>
+
+    </string-array>
+
+    <string-array name="answer_names">
+        <item>A 1</item>
+        <item>A 2</item>
+        <item>A 3</item>
+        <item>A 4</item>
+
+    </string-array>
+
 
     <string-array name="beschrijving">
         <item>BLA BLA BLA </item>

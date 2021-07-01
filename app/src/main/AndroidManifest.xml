@@ -11,7 +11,11 @@
         android:theme="@style/Theme.PilReminderApp">
         <activity android:name=".SecondActivity"
             android:parentActivityName=".MainActivity"
-            android:label="Details"/>
+            android:label="Back"/>
+
+        <activity android:name=".ThirdActivity"/>
+
+
         <activity android:name=".MainActivity">
 
             <intent-filter>

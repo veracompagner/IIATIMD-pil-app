@@ -1,7 +1,6 @@
 package com.example.pilreminderapp;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,8 +20,8 @@ public class SecondActivity extends AppCompatActivity {
         setContentView(R.layout.activity_second);
 
         imageView2 = findViewById(R.id.imageView2);
-        titleSecond = findViewById(R.id.titleSecond);
-        beschrijvingSecond = findViewById(R.id.beschrijvingSecond);
+        titleSecond = findViewById(R.id.medications_names_second);
+        beschrijvingSecond = findViewById(R.id.beschrijving_second);
 
         getData();
         setData();
