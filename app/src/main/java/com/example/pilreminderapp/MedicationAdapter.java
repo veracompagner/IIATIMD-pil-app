@@ -12,62 +12,79 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.MedicationViewHolder> {
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-    private Medication[] pillen;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MedicationAdapter extends ListAdapter<Medication, MedicationAdapter.MedicationViewHolder> {
+
     Context context;
+
+    public MedicationAdapter() {
+        super(DIFF_CALLBACK);
+    }
+
+    private static final DiffUtil.ItemCallback<Medication> DIFF_CALLBACK = new DiffUtil.ItemCallback<Medication>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Medication oldItem, @NonNull Medication newItem) {
+            return oldItem.getUuid() == newItem.getUuid();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Medication oldItem, @NonNull Medication newItem) {
+            return oldItem.getName().equals(newItem.getName()) &&
+                    oldItem.getBeschrijving().equals(newItem.getBeschrijving());
+        }
+    };
 
     public class MedicationViewHolder extends RecyclerView.ViewHolder {
 
-        TextView text1, text2;
-        //ImageView myImage;
+        TextView textViewName, textViewBeschrijving;
         ConstraintLayout mainLayout;
 
         public MedicationViewHolder(@NonNull View itemView) {
             super(itemView);
-            text1 = itemView.findViewById(R.id.MedicationName);
-            text2 = itemView.findViewById(R.id.beschrijving);
-            //myImage = itemView.findViewById(R.id.imageView);
+            textViewName = itemView.findViewById(R.id.MedicationName);
+            textViewBeschrijving = itemView.findViewById(R.id.beschrijving);
             mainLayout = itemView.findViewById(R.id.mainLayout);
         }
     }
 
-    public MedicationAdapter(Context ct, Medication[] pillen){
-        this.pillen = pillen;
-        context = ct;
-    }
+    //private List<Medication> pillen = new ArrayList<>();
 
     @NonNull
     @Override
     public MedicationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.medication_card, parent, false);
-        MedicationViewHolder medicationViewHolder = new MedicationViewHolder(view);
-        return medicationViewHolder;
+
+        return new MedicationViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MedicationViewHolder holder, int position) {
-
-        holder.text1.setText(pillen[position].getName());
-        holder.text2.setText(pillen[position].getBeschrijving());
+        Medication currentMedication = getItem(position);
+        holder.textViewName.setText(currentMedication.getName());
+        holder.textViewBeschrijving.setText(currentMedication.getBeschrijving());
 
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, SecondActivity.class);
-                intent.putExtra("data1", pillen[position].getName());
-                intent.putExtra("data2", pillen[position].getBeschrijving());
-                //intent.putExtra("MyImage", images[position]);
+                intent.putExtra("data1", currentMedication.getName());
+                intent.putExtra("data2", currentMedication.getBeschrijving());
                 context.startActivity(intent);
             }
         });
     }
 
-    @Override
-    public int getItemCount() {
-        return pillen.length;
+    public Medication getMedicationAt(int position){
+        return getItem(position);
     }
 
 }
