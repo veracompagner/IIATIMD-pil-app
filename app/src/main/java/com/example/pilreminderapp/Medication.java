@@ -29,15 +29,15 @@ public class Medication {
     }
 
     public String getName(){
-        return this.name;
+        return name;
     }
 
     public String getBeschrijving(){
-        return this.beschrijving;
+        return beschrijving;
     }
 
     public int getUuid(){
-        return this.uuid;
+        return uuid;
     }
 
     public void setUuid(int id) {

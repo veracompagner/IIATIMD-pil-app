@@ -1,29 +1,26 @@
 package com.example.pilreminderapp;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MedicationAdapter extends ListAdapter<Medication, MedicationAdapter.MedicationViewHolder> {
-
+    private List<Medication> pillen = new ArrayList<>();
+    private OnItemClickListener listener;
     Context context;
 
     public MedicationAdapter() {
@@ -43,26 +40,11 @@ public class MedicationAdapter extends ListAdapter<Medication, MedicationAdapter
         }
     };
 
-    public class MedicationViewHolder extends RecyclerView.ViewHolder {
-
-        TextView textViewName, textViewBeschrijving;
-        ConstraintLayout mainLayout;
-
-        public MedicationViewHolder(@NonNull View itemView) {
-            super(itemView);
-            textViewName = itemView.findViewById(R.id.MedicationName);
-            textViewBeschrijving = itemView.findViewById(R.id.beschrijving);
-            mainLayout = itemView.findViewById(R.id.mainLayout);
-        }
-    }
-
-    //private List<Medication> pillen = new ArrayList<>();
-
     @NonNull
     @Override
     public MedicationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.medication_card, parent, false);
-
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.medication_card, parent, false);
         return new MedicationViewHolder(view);
     }
 
@@ -71,20 +53,41 @@ public class MedicationAdapter extends ListAdapter<Medication, MedicationAdapter
         Medication currentMedication = getItem(position);
         holder.textViewName.setText(currentMedication.getName());
         holder.textViewBeschrijving.setText(currentMedication.getBeschrijving());
-
-        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, SecondActivity.class);
-                intent.putExtra("data1", currentMedication.getName());
-                intent.putExtra("data2", currentMedication.getBeschrijving());
-                context.startActivity(intent);
-            }
-        });
     }
 
     public Medication getMedicationAt(int position){
         return getItem(position);
+    }
+
+    class MedicationViewHolder extends RecyclerView.ViewHolder {
+        private TextView textViewName;
+        private TextView textViewBeschrijving;
+        ConstraintLayout mainLayout;
+
+        public MedicationViewHolder(View view) {
+            super(view);
+            textViewName = view.findViewById(R.id.MedicationName);
+            textViewBeschrijving = view.findViewById(R.id.beschrijving);
+            mainLayout = view.findViewById(R.id.mainLayout);
+
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if(listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(getMedicationAt(position));
+                    }
+                }
+            });
+        }
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(Medication medication);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
     }
 
 }

@@ -19,7 +19,7 @@ public interface MedicationDAO {
     void update(Medication pillen);
 
     @Delete
-    void delete(Medication pillen);
+    void delete(Medication medication);
 
     @Query("SELECT * FROM medication_table ORDER BY name ASC")
     LiveData<List<Medication>> getAllMedication();

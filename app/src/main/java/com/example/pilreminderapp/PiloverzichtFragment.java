@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -23,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -31,8 +34,6 @@ import java.util.List;
 public class PiloverzichtFragment extends Fragment {
 
     Context context;
-
-    private RecyclerView recyclerView;
 
     public PiloverzichtFragment(Context ct){
         context = ct;
@@ -67,14 +68,14 @@ public class PiloverzichtFragment extends Fragment {
         buttonAddPil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), AddPilActivity.class);
-                    someActivityResultLauncher.launch(intent);
+                Intent intent = new Intent(getActivity(), AddPilActivity.class);
+                someActivityResultLauncher.launch(intent);
             }
         });
 
-        recyclerView = view.findViewById(R.id.medicationRecyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.medicationRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(false);
 
         final MedicationAdapter adapter = new MedicationAdapter();
         recyclerView.setAdapter(adapter);
@@ -85,9 +86,20 @@ public class PiloverzichtFragment extends Fragment {
             public void onChanged(List<Medication> pillen) {
                 adapter.submitList(pillen);
             }
+
         });
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        adapter.setOnItemClickListener(new MedicationAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Medication medication) {
+                Intent intent = new Intent(getActivity(), SecondActivity.class);
+                intent.putExtra("data1", medication.getName());
+                intent.putExtra("data2", medication.getBeschrijving());
+                startActivity(intent);
+            }
+        });
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.UP | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;

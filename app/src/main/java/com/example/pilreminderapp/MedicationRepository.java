@@ -40,6 +40,7 @@ public class MedicationRepository {
 
     private static class InsertMedicationAsyncTask extends AsyncTask<Medication, Void, Void>{
         private MedicationDAO medicationDAO;
+
         private InsertMedicationAsyncTask(MedicationDAO medicationDAO){
             this.medicationDAO = medicationDAO;
         }
@@ -53,6 +54,7 @@ public class MedicationRepository {
 
     private static class UpdateMedicationAsyncTask extends AsyncTask<Medication, Void, Void>{
         private MedicationDAO medicationDAO;
+
         private UpdateMedicationAsyncTask(MedicationDAO medicationDAO){
             this.medicationDAO = medicationDAO;
         }
@@ -66,6 +68,7 @@ public class MedicationRepository {
 
     private static class DeleteMedicationAsyncTask extends AsyncTask<Medication, Void, Void>{
         private MedicationDAO medicationDAO;
+
         private DeleteMedicationAsyncTask(MedicationDAO medicationDAO){
             this.medicationDAO = medicationDAO;
         }

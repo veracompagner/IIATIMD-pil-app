@@ -56,7 +56,6 @@ public class SecondActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.bewerk_pil:
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
