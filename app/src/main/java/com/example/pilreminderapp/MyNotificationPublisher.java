@@ -8,6 +8,7 @@ import android.content.Intent;
 
 public class MyNotificationPublisher extends BroadcastReceiver {
 
+        //naam van pil nog toevoegen
         public static String NOTIFICATION_ID = "notification_id";
         public static String NOTIFICATION = "notification";
 

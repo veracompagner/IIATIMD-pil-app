@@ -20,18 +20,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameOfTimer" />
 
+
     <Button
         android:id="@+id/fab"
         android:layout_width="246dp"
         android:layout_height="63dp"
-        android:layout_marginBottom="124dp"
+        android:layout_marginBottom="100dp"
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeOfTimer" />
-
+        app:layout_constraintTop_toBottomOf="@+id/repeatOfTimer"
+        app:layout_constraintVertical_bias="0.841" />
 
     <EditText
         android:id="@+id/nameOfTimer"
@@ -45,6 +46,16 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/repeatOfTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:text="@string/repeat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeOfTimer" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

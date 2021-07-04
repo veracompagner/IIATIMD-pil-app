@@ -42,6 +42,7 @@
     <string name="time">Hoelaat?</string>
     <string name="invullen1">Kies een tijd</string>
     <string name="invullen">Naam van timer</string>
+    <string name="repeat">Herhalen?</string>
 
 
 </resources>
