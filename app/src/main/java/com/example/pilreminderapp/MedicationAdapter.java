@@ -1,12 +1,10 @@
 package com.example.pilreminderapp;
 
-import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,9 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MedicationAdapter extends ListAdapter<Medication, MedicationAdapter.MedicationViewHolder> {
-    private List<Medication> pillen = new ArrayList<>();
+
     private OnItemClickListener listener;
-    Context context;
 
     public MedicationAdapter() {
         super(DIFF_CALLBACK);
@@ -29,16 +26,17 @@ public class MedicationAdapter extends ListAdapter<Medication, MedicationAdapter
 
     private static final DiffUtil.ItemCallback<Medication> DIFF_CALLBACK = new DiffUtil.ItemCallback<Medication>() {
         @Override
-        public boolean areItemsTheSame(@NonNull Medication oldItem, @NonNull Medication newItem) {
+        public boolean areItemsTheSame(Medication oldItem, Medication newItem) {
             return oldItem.getUuid() == newItem.getUuid();
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull Medication oldItem, @NonNull Medication newItem) {
+        public boolean areContentsTheSame(Medication oldItem, Medication newItem) {
             return oldItem.getName().equals(newItem.getName()) &&
                     oldItem.getBeschrijving().equals(newItem.getBeschrijving());
         }
     };
+
 
     @NonNull
     @Override
@@ -75,15 +73,16 @@ public class MedicationAdapter extends ListAdapter<Medication, MedicationAdapter
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     if(listener != null && position != RecyclerView.NO_POSITION) {
-                        listener.onItemClick(getMedicationAt(position));
+                        listener.onItemClick(getItem(position));
                     }
                 }
             });
         }
+
     }
 
     public interface OnItemClickListener{
-        void onItemClick(Medication medication);
+        boolean onItemClick(Medication medication);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){

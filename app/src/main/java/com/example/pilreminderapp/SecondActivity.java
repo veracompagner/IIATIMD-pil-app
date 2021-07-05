@@ -1,26 +1,33 @@
 package com.example.pilreminderapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ImageView;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 public class SecondActivity extends AppCompatActivity {
-    TextView titleSecond, beschrijvingSecond;
 
+    public static final int EDIT_NOTE_REQUEST = 2;
+    TextView titleSecond, beschrijvingSecond;
     String data1, data2;
+    int uuid;
+    private MedicationViewModel medicationViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
+
+        medicationViewModel = new ViewModelProvider(this).get(MedicationViewModel.class);
 
         titleSecond = findViewById(R.id.titleSecond);
         beschrijvingSecond = findViewById(R.id.beschrijvingSecond);
@@ -30,7 +37,7 @@ public class SecondActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        if (getIntent().hasExtra("data1") && getIntent().hasExtra("data2")) {
+        if (getIntent().hasExtra("data1") && getIntent().hasExtra("data2")  && getIntent().hasExtra("uuid")) {
 
             data1 = getIntent().getStringExtra("data1");
             data2 = getIntent().getStringExtra("data2");
@@ -49,14 +56,37 @@ public class SecondActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.bewerken_menu, menu);
+        menuInflater.inflate(R.menu.delete_menu, menu);
         return true;
     }
+
+    final MedicationAdapter adapter = new MedicationAdapter();
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.bewerk_pil:
+                adapter.setOnItemClickListener(new MedicationAdapter.OnItemClickListener() {
+                    @Override
+                    // Activity start niet?
+                    public boolean onItemClick(Medication medication) {
+                        if (onItemClick(medication) == true) {
+                            Intent intent = new Intent(SecondActivity.this, AddEditPilActivity.class);
+                            intent.putExtra(AddEditPilActivity.EXTRA_UUID, medication.getUuid());
+                            Log.d("Test", String.valueOf(medication.getUuid()));
+                            intent.putExtra(AddEditPilActivity.EXTRA_NAME, medication.getName());
+                            intent.putExtra(AddEditPilActivity.EXTRA_BESCHRIJVING, medication.getBeschrijving());
+                            startActivity(intent);
+                            return true;
+                        };
+                        return true;
+                    };
+                });
                 return true;
+            case R.id.verwijder_pil:
+                // Wil een int krijgen maar niet duidelijk welke / hoe.
+                //medicationViewModel.delete();
+                finish();
             default:
                 return super.onOptionsItemSelected(item);
         }

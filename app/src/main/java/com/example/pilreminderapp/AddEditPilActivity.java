@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class AddPilActivity extends AppCompatActivity {
+public class AddEditPilActivity extends AppCompatActivity {
     public static final String EXTRA_UUID =
             "com.example.pilreminderapp.EXTRA_UUID";
     public static final String EXTRA_NAME =
@@ -32,7 +32,16 @@ public class AddPilActivity extends AppCompatActivity {
         editTextBeschrijving = findViewById(R.id.edit_text_beschrijving);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
-        setTitle("Voeg pil toe");
+
+        Intent intent = getIntent();
+        if(intent.hasExtra(EXTRA_UUID)){
+            setTitle("Bewerken");
+            editTextName.setText(intent.getStringExtra(EXTRA_NAME));
+            editTextBeschrijving.setText(intent.getStringExtra(EXTRA_BESCHRIJVING));
+        }
+        else {
+            setTitle("Voeg pil toe");
+        }
     }
 
     private void savePil(){
@@ -47,6 +56,12 @@ public class AddPilActivity extends AppCompatActivity {
         Intent data = new Intent();
         data.putExtra(EXTRA_NAME, name);
         data.putExtra(EXTRA_BESCHRIJVING, beschrijving);
+
+        int uuid = getIntent().getIntExtra(EXTRA_UUID, -1);
+        if(uuid != -1){
+            data.putExtra(EXTRA_UUID, uuid);
+        }
+
         setResult(RESULT_OK, data);
         finish();
     }

@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PilReminderApp">
-        <activity android:name=".AddPilActivity"></activity>
+        <activity android:name=".AddEditPilActivity"></activity>
         <activity
             android:name=".SecondActivity"
             android:label="Details"

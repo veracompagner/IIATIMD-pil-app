@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -25,7 +22,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -35,7 +31,7 @@ public class PiloverzichtFragment extends Fragment {
 
     Context context;
 
-    public PiloverzichtFragment(Context ct){
+    public PiloverzichtFragment(Context ct) {
         context = ct;
     }
 
@@ -47,19 +43,33 @@ public class PiloverzichtFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_pil_overzicht, container, false);
 
-        ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+        ActivityResultLauncher<Intent> addEditActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == Activity.RESULT_OK) {
                             Intent data = result.getData();
-                            String name = data.getStringExtra(AddPilActivity.EXTRA_NAME);
-                            String beschrijving = data.getStringExtra(AddPilActivity.EXTRA_BESCHRIJVING);
+                            String name = data.getStringExtra(AddEditPilActivity.EXTRA_NAME);
+                            String beschrijving = data.getStringExtra(AddEditPilActivity.EXTRA_BESCHRIJVING);
 
                             Medication medication = new Medication(name, beschrijving);
                             medicationViewModel.insert(medication);
                             Toast.makeText(getActivity(), "Pil toegevoegd", Toast.LENGTH_SHORT).show();
+                        } else if (result.getResultCode() == Activity.RESULT_OK) {
+                            Intent data = result.getData();
+                            int uuid = data.getIntExtra(AddEditPilActivity.EXTRA_UUID, -1);
+                            if (uuid == -1) {
+                                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            String name = data.getStringExtra(AddEditPilActivity.EXTRA_NAME);
+                            String beschrijving = data.getStringExtra(AddEditPilActivity.EXTRA_BESCHRIJVING);
+
+                            Medication medication = new Medication(name, beschrijving);
+                            medication.setUuid(uuid);
+                            medicationViewModel.update(medication);
+                            Toast.makeText(getActivity(), "Succesvol bijgewerkt", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -68,8 +78,8 @@ public class PiloverzichtFragment extends Fragment {
         buttonAddPil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AddPilActivity.class);
-                someActivityResultLauncher.launch(intent);
+                Intent intent = new Intent(getActivity(), AddEditPilActivity.class);
+                addEditActivityResultLauncher.launch(intent);
             }
         });
 
@@ -80,39 +90,42 @@ public class PiloverzichtFragment extends Fragment {
         final MedicationAdapter adapter = new MedicationAdapter();
         recyclerView.setAdapter(adapter);
 
-        medicationViewModel = new ViewModelProvider(this).get(MedicationViewModel.class);
+        medicationViewModel = new ViewModelProvider(getActivity()).get(MedicationViewModel.class);
         medicationViewModel.getAllMedication().observe(getViewLifecycleOwner(), new Observer<List<Medication>>() {
             @Override
-            public void onChanged(List<Medication> pillen) {
-                adapter.submitList(pillen);
+            public void onChanged(@Nullable List<Medication> medications) {
+                //adapter.notifyDataSetChanged();
+                adapter.submitList(medications);
             }
 
         });
 
         adapter.setOnItemClickListener(new MedicationAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(Medication medication) {
+            public boolean onItemClick(Medication medication) {
                 Intent intent = new Intent(getActivity(), SecondActivity.class);
                 intent.putExtra("data1", medication.getName());
                 intent.putExtra("data2", medication.getBeschrijving());
+                intent.putExtra("uuid", medication.getUuid());
                 startActivity(intent);
+                return false;
             }
         });
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.UP | ItemTouchHelper.RIGHT) {
+        // Werkt om de één of andere reden niet goed. Item komt weer terug na refres.
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 return false;
             }
-
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 medicationViewModel.delete(adapter.getMedicationAt(viewHolder.getAdapterPosition()));
                 Toast.makeText(getActivity(), "Pil verwijderd", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
 
         return view;
+        }
     }
-
-}
