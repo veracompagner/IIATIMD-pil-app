@@ -140,8 +140,7 @@ public class SecondActivity extends AppCompatActivity {
 
 
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        int interval = 1000 * 60;
-        //int interval = 1000 * 60 * 60 * 24;
+        int interval = 1000 * 60 * 60 * 24;
 
         Calendar calendar = Calendar.getInstance();
 

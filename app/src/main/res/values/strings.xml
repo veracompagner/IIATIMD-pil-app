@@ -37,7 +37,8 @@
         <item>BLA BLA BLA </item>
     </string-array>
 
-
+    <string name="titleTime">Hallo</string>
+    <string name="contentTime">Gakki</string>
     <string name="time">Hoelaat?</string>
     <string name="invullen1">Kies een tijd</string>
     <string name="invullen">Naam van timer</string>
