@@ -13,8 +13,14 @@ import android.graphics.drawable.BitmapDrawable;
 import android.media.RingtoneManager;
 import android.os.Build;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.os.SystemClock;
 import android.util.Log;
+=======
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+>>>>>>> Marius
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -22,6 +28,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.room.Room;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -30,11 +38,17 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
+<<<<<<< HEAD
+=======
+    private MedicationViewModel medicationViewModel;
+>>>>>>> Marius
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        medicationViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(MedicationViewModel.class);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
@@ -60,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         return piloverzichtFragment;
     }
 
+<<<<<<< HEAD
     private FaqFragment setFaqFragment(){
         FaqFragment faqFragment = new FaqFragment(this);
         return faqFragment;
@@ -121,6 +136,25 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+=======
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.overzicht_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.delete_all_pillen:
+                medicationViewModel.deleteAllMedication();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+>>>>>>> Marius
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {

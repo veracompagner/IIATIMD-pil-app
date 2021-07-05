@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PilReminderApp">
+<<<<<<< HEAD
         <activity android:name=".SecondActivity"
             android:parentActivityName=".MainActivity"
             android:label="Back"/>
@@ -16,8 +17,14 @@
         <activity android:name=".ThirdActivity"/>
 
         <receiver android:name=".MyNotificationPublisher" />
+=======
+        <activity android:name=".AddEditPilActivity"></activity>
+        <activity
+            android:name=".SecondActivity"
+            android:label="Details"
+            android:parentActivityName=".MainActivity" />
+>>>>>>> Marius
         <activity android:name=".MainActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
