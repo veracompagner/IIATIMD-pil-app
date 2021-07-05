@@ -13,14 +13,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.media.RingtoneManager;
 import android.os.Build;
 import android.os.Bundle;
-<<<<<<< HEAD
-import android.os.SystemClock;
+
 import android.util.Log;
-=======
-import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuInflater;
->>>>>>> Marius
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -38,10 +35,8 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-<<<<<<< HEAD
-=======
     private MedicationViewModel medicationViewModel;
->>>>>>> Marius
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -74,69 +69,22 @@ public class MainActivity extends AppCompatActivity {
         return piloverzichtFragment;
     }
 
-<<<<<<< HEAD
+
     private FaqFragment setFaqFragment(){
         FaqFragment faqFragment = new FaqFragment(this);
         return faqFragment;
     }
 
-    private KalenderFragment setKalenderFragment(){
+   /* private KalenderFragment setKalenderFragment(){
         KalenderFragment kalenderFragment = new KalenderFragment(this);
         return kalenderFragment;
-    }
-
-
-    public void scheduleNotification(Context context, int hourOfDay, int minutes, boolean repeat, int notificationId) {
-        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.voorbeeld);
-
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                .setContentTitle(context.getString(R.string.titleTime))
-                .setContentText(context.getString(R.string.contentTime))
-                .setAutoCancel(true)
-                .setSmallIcon(R.drawable.ic_baseline_calendar_today_24)
-                .setLargeIcon(largeIcon)
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-
-        Intent intent = new Intent(context, KalenderFragment.class);
-        PendingIntent activity = PendingIntent.getActivity(context, notificationId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        builder.setContentIntent(activity);
-
-        builder.setChannelId("hoi");
-        Notification notification = builder.build();
-
-        Intent notificationIntent = new Intent(context, MyNotificationPublisher.class);
-        notificationIntent.putExtra(MyNotificationPublisher.NOTIFICATION_ID, notificationId);
-        notificationIntent.putExtra(MyNotificationPublisher.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-
-
-        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        int interval = 1000 * 60;
-        //int interval = 1000 * 60 * 60 * 24;
-
-        Calendar calendar = Calendar.getInstance();
-
-        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-        calendar.set(Calendar.MINUTE, minutes);
-
-
-        if (repeat){
-            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                    interval, pendingIntent);
-        }else {
-            Log.d("test", "klopt" );
-            manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-
-        }
-
-    }
+    }*/
 
 
 
 
-=======
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -154,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
->>>>>>> Marius
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -163,9 +110,9 @@ public class MainActivity extends AppCompatActivity {
                     Fragment selectedFragment = null;
 
                     switch (item.getItemId()){
-                        case R.id.nav_kalender:
-                            selectedFragment = setKalenderFragment();
-                            break;
+                        //case R.id.nav_kalender:
+                          //  selectedFragment = setKalenderFragment();
+                           // break;
                         case R.id.nav_pil_overzicht:
                             selectedFragment = setPiloverzichtFragment();
                             break;
