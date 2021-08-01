@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -21,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -35,8 +37,10 @@ import java.util.Calendar;
 public class SecondActivity extends AppCompatActivity {
 
     public static final int EDIT_NOTE_REQUEST = 2;
-    TextView titleSecond, beschrijvingSecond, innamenSecond;
-    String data1, data2, data3;
+    TextView titleSecond, beschrijvingSecond;
+    Spinner herhaalSecond;
+    String data1, data2;
+    int data4;
     int uuid;
     private MedicationViewModel medicationViewModel;
 
@@ -48,7 +52,6 @@ public class SecondActivity extends AppCompatActivity {
     TimePickerDialog timePickerDialog;
     int hourOfDay;
     int minutes;
-    boolean repeat;
     int tOT;
     String time;
 
@@ -58,15 +61,24 @@ public class SecondActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
-
         medicationViewModel = new ViewModelProvider(this).get(MedicationViewModel.class);
 
         titleSecond = findViewById(R.id.medications_names_second);
         beschrijvingSecond = findViewById(R.id.beschrijving_second);
-        innamenSecond = findViewById(R.id.innamen_second);
+        herhaalSecond = findViewById(R.id.herhaal_second);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.repeat_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        herhaalSecond.setAdapter(adapter);
+        herhaalSecond.setEnabled(false);
+
+
 
         getData();
         setData();
+
+
+
 
         Button fab = (Button) findViewById(R.id.fab);
         nameOfTimer = findViewById(R.id.nameOfTimer);
@@ -93,11 +105,11 @@ public class SecondActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                scheduleNotification(SecondActivity.this, hourOfDay, minutes, repeatOfTimer.isChecked(), 42);
+                scheduleNotification(SecondActivity.this, hourOfDay, minutes, herhaalSecond.getSelectedItemPosition(), 42);
                 AlertDialog.Builder builder = new AlertDialog.Builder(SecondActivity.this);
 
                 builder.setCancelable(true);
-                builder.setTitle("Timer voor " + titleSecond.getText() + "is gezet op:");
+                builder.setTitle("Timer voor " + titleSecond.getText() + " is gezet op:");
                 builder.setMessage((hourOfDay + ":" + minutes));
 
                 builder.setPositiveButton("Oke", new DialogInterface.OnClickListener() {
@@ -112,7 +124,7 @@ public class SecondActivity extends AppCompatActivity {
 
     }
 
-    public void scheduleNotification(Context context, int hourOfDay, int minutes, boolean repeat, int notificationId) {
+    public void scheduleNotification(Context context, int hourOfDay, int minutes, int herhaal, int notificationId) {
         Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.voorbeeld);
 
 
@@ -138,35 +150,46 @@ public class SecondActivity extends AppCompatActivity {
         notificationIntent.putExtra(MyNotificationPublisher.NOTIFICATION, notification);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-
-
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        int interval = 1000 * 60 * 60 * 24;
 
         Calendar calendar = Calendar.getInstance();
 
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minutes);
 
+        int dag_msec = 1000 * 60 * 60 * 24;
+        int week_msec = 7 * dag_msec;
+        int maand_msec = 4 * week_msec;
+        int interval = 0;
 
-        if (repeat){
+        switch (herhaal){
+            case 1:
+                interval = dag_msec;
+                break;
+            case 2:
+                interval = week_msec;
+                break;
+            case 3:
+                interval = maand_msec;
+                break;
+        }
+
+        if (interval > 0){
             manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                     interval, pendingIntent);
-        }else {
-
+        } else {
             manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-
         }
 
     }
 
 
     private void getData() {
-        if (getIntent().hasExtra("data1") && getIntent().hasExtra("data2") && getIntent().hasExtra("data3")  && getIntent().hasExtra("uuid")) {
+        if (getIntent().hasExtra("data1") && getIntent().hasExtra("data2") && getIntent().hasExtra("data4")  && getIntent().hasExtra("uuid")) {
 
             data1 = getIntent().getStringExtra("data1");
             data2 = getIntent().getStringExtra("data2");
-            data3 = getIntent().getStringExtra("data3");
+            data4 = getIntent().getIntExtra("data4", 0);
 
         } else {
             Toast.makeText(this, "No data.", Toast.LENGTH_SHORT).show();
@@ -176,7 +199,7 @@ public class SecondActivity extends AppCompatActivity {
     private void setData(){
         titleSecond.setText(data1);
         beschrijvingSecond.setText(data2);
-        innamenSecond.setText(data3);
+        herhaalSecond.setSelection(data4);
     }
 
     @Override
@@ -203,7 +226,7 @@ public class SecondActivity extends AppCompatActivity {
                             Log.d("Test", String.valueOf(medication.getUuid()));
                             intent.putExtra(AddEditPilActivity.EXTRA_NAME, medication.getName());
                             intent.putExtra(AddEditPilActivity.EXTRA_BESCHRIJVING, medication.getBeschrijving());
-                            intent.putExtra(AddEditPilActivity.EXTRA_INNAMEN, medication.getInnamen());
+                            intent.putExtra(AddEditPilActivity.EXTRA_HERHAAL, medication.getHerhaal());
                             startActivity(intent);
                             return true;
                         };

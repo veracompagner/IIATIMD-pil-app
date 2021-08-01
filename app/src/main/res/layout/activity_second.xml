@@ -29,16 +29,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/medications_names_second" />
 
-    <TextView
-        android:id="@+id/innamen_second"
-        android:layout_width="wrap_content"
+    <Spinner
+        android:id="@+id/herhaal_second"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/beschrijving_second" />
+        app:layout_constraintTop_toBottomOf="@+id/beschrijving_second"
+        tools:layout_editor_absoluteX="0dp" />
 
     <EditText
         android:id="@+id/timeOfTimer"
@@ -50,7 +47,7 @@
         android:inputType="time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/innamen_second" />
+        app:layout_constraintTop_toBottomOf="@+id/herhaal_second" />
 
     <Button
         android:id="@+id/fab"
@@ -62,15 +59,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <CheckBox
-        android:id="@+id/repeatOfTimer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/repeat"
-        app:layout_constraintBottom_toTopOf="@+id/fab"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeOfTimer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

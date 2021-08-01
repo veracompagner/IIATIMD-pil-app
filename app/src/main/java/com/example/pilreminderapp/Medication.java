@@ -12,35 +12,25 @@ public class Medication {
     @ColumnInfo
     private String beschrijving;
     @ColumnInfo
-    private String innamen;
+    private int herhaal;
     @PrimaryKey(autoGenerate = true)
     private int uuid;
 
-    /*
-    public Medication(String name, String beschrijving, int uuid){
+
+    public Medication(String name, String beschrijving, int herhaal) {
         this.name = name;
         this.beschrijving = beschrijving;
-        this.uuid = uuid;
-    }
-
-     */
-
-    public Medication(String name, String beschrijving, String innamen) {
-        this.name = name;
-        this.beschrijving = beschrijving;
-        this.innamen = innamen;
+        this.herhaal = herhaal;
     }
 
     public String getName(){
         return name;
     }
-
     public String getBeschrijving(){
         return beschrijving;
     }
-
-    public String getInnamen(){
-        return innamen;
+    public int getHerhaal(){
+        return herhaal;
     }
 
     public int getUuid(){

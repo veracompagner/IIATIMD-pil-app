@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class AddEditPilActivity extends AppCompatActivity {
@@ -18,13 +22,14 @@ public class AddEditPilActivity extends AppCompatActivity {
             "com.example.pilreminderapp.EXTRA_NAME";
     public static final String EXTRA_BESCHRIJVING =
             "com.example.pilreminderapp.EXTRA_BESCHRIJVING";
-    public static final String EXTRA_INNAMEN =
-            "com.example.pilreminderapp.EXTRA_INNAMEN";
+    public static final String EXTRA_HERHAAL =
+            "com.example.pilreminderapp.EXTRA_HERHAAL";
 
 
     private EditText editTextName;
     private EditText editTextBeschrijving;
-    private EditText editTextInnamen;
+    private Spinner editSpinner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +38,12 @@ public class AddEditPilActivity extends AppCompatActivity {
 
         editTextName = findViewById(R.id.edit_text_name);
         editTextBeschrijving = findViewById(R.id.edit_text_beschrijving);
-        editTextInnamen = findViewById(R.id.edit_text_innamen);
+        editSpinner = findViewById(R.id.repeat_spinner);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.repeat_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        editSpinner.setAdapter(adapter);
+
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
@@ -42,7 +52,7 @@ public class AddEditPilActivity extends AppCompatActivity {
             setTitle("Bewerken");
             editTextName.setText(intent.getStringExtra(EXTRA_NAME));
             editTextBeschrijving.setText(intent.getStringExtra(EXTRA_BESCHRIJVING));
-            editTextInnamen.setText(intent.getStringExtra(EXTRA_INNAMEN));
+            editSpinner.setSelection(intent.getIntExtra(EXTRA_HERHAAL, 0));
         }
         else {
             setTitle("Voeg pil toe");
@@ -52,7 +62,9 @@ public class AddEditPilActivity extends AppCompatActivity {
     private void savePil(){
         String name = editTextName.getText().toString();
         String beschrijving = editTextBeschrijving.getText().toString();
-        String innamen = editTextInnamen.getText().toString();
+        int herhaal = editSpinner.getSelectedItemPosition();
+
+
 
         if(name.trim().isEmpty() || beschrijving.trim().isEmpty()){
             Toast.makeText(this, "Ongeldige invoer", Toast.LENGTH_SHORT).show();
@@ -62,7 +74,7 @@ public class AddEditPilActivity extends AppCompatActivity {
         Intent data = new Intent();
         data.putExtra(EXTRA_NAME, name);
         data.putExtra(EXTRA_BESCHRIJVING, beschrijving);
-        data.putExtra(EXTRA_INNAMEN, innamen);
+        data.putExtra(EXTRA_HERHAAL, herhaal);
 
         int uuid = getIntent().getIntExtra(EXTRA_UUID, -1);
         if(uuid != -1){

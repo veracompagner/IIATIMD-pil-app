@@ -53,9 +53,9 @@ public class PiloverzichtFragment extends Fragment {
                             Intent data = result.getData();
                             String name = data.getStringExtra(AddEditPilActivity.EXTRA_NAME);
                             String beschrijving = data.getStringExtra(AddEditPilActivity.EXTRA_BESCHRIJVING);
-                            String innamen = data.getStringExtra(AddEditPilActivity.EXTRA_INNAMEN);
+                            int herhaal = data.getIntExtra(AddEditPilActivity.EXTRA_HERHAAL, 0);
 
-                            Medication medication = new Medication(name, beschrijving, innamen);
+                            Medication medication = new Medication (name, beschrijving, herhaal);
                             medicationViewModel.insert(medication);
                             Toast.makeText(getActivity(), "Pil toegevoegd", Toast.LENGTH_SHORT).show();
                         } else if (result.getResultCode() == Activity.RESULT_OK) {
@@ -67,9 +67,9 @@ public class PiloverzichtFragment extends Fragment {
                             }
                             String name = data.getStringExtra(AddEditPilActivity.EXTRA_NAME);
                             String beschrijving = data.getStringExtra(AddEditPilActivity.EXTRA_BESCHRIJVING);
-                            String innamen = data.getStringExtra(AddEditPilActivity.EXTRA_INNAMEN);
+                            int herhaal = data.getIntExtra(AddEditPilActivity.EXTRA_HERHAAL, 0);
 
-                            Medication medication = new Medication(name, beschrijving, innamen);
+                            Medication medication = new Medication(name, beschrijving, herhaal);
                             medication.setUuid(uuid);
                             medicationViewModel.update(medication);
                             Toast.makeText(getActivity(), "Succesvol bijgewerkt", Toast.LENGTH_SHORT).show();
@@ -109,7 +109,7 @@ public class PiloverzichtFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), SecondActivity.class);
                 intent.putExtra("data1", medication.getName());
                 intent.putExtra("data2", medication.getBeschrijving());
-                intent.putExtra("data3", medication.getInnamen());
+                intent.putExtra("data4",medication.getHerhaal());
                 intent.putExtra("uuid", medication.getUuid());
                 startActivity(intent);
                 return false;

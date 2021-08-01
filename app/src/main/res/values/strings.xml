@@ -5,12 +5,22 @@
     <string name="linkerButton">Kalender</string>
 
     <string name="timer">Zet Timer</string>
+    <string name="dosering">Dosering: </string>
 
     <string-array name="medications_names">
         <item>Anticonceptie</item>
         <item>Antibiotica</item>
         <item>Vitamine B</item>
         <item>Vitamine D</item>
+
+    </string-array>
+
+    <string-array name="repeat_array">
+        <item>Eenmalig</item>
+        <item>Dagelijks</item>
+        <item>Wekelijks</item>
+        <item>Maandelijks</item>
+
 
     </string-array>
 
