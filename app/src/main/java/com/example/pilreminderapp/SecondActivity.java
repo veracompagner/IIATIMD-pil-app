@@ -35,8 +35,8 @@ import java.util.Calendar;
 public class SecondActivity extends AppCompatActivity {
 
     public static final int EDIT_NOTE_REQUEST = 2;
-    TextView titleSecond, beschrijvingSecond;
-    String data1, data2;
+    TextView titleSecond, beschrijvingSecond, innamenSecond;
+    String data1, data2, data3;
     int uuid;
     private MedicationViewModel medicationViewModel;
 
@@ -63,6 +63,7 @@ public class SecondActivity extends AppCompatActivity {
 
         titleSecond = findViewById(R.id.medications_names_second);
         beschrijvingSecond = findViewById(R.id.beschrijving_second);
+        innamenSecond = findViewById(R.id.innamen_second);
 
         getData();
         setData();
@@ -161,10 +162,11 @@ public class SecondActivity extends AppCompatActivity {
 
 
     private void getData() {
-        if (getIntent().hasExtra("data1") && getIntent().hasExtra("data2")  && getIntent().hasExtra("uuid")) {
+        if (getIntent().hasExtra("data1") && getIntent().hasExtra("data2") && getIntent().hasExtra("data3")  && getIntent().hasExtra("uuid")) {
 
             data1 = getIntent().getStringExtra("data1");
             data2 = getIntent().getStringExtra("data2");
+            data3 = getIntent().getStringExtra("data3");
 
         } else {
             Toast.makeText(this, "No data.", Toast.LENGTH_SHORT).show();
@@ -174,6 +176,7 @@ public class SecondActivity extends AppCompatActivity {
     private void setData(){
         titleSecond.setText(data1);
         beschrijvingSecond.setText(data2);
+        innamenSecond.setText(data3);
     }
 
     @Override
@@ -200,6 +203,7 @@ public class SecondActivity extends AppCompatActivity {
                             Log.d("Test", String.valueOf(medication.getUuid()));
                             intent.putExtra(AddEditPilActivity.EXTRA_NAME, medication.getName());
                             intent.putExtra(AddEditPilActivity.EXTRA_BESCHRIJVING, medication.getBeschrijving());
+                            intent.putExtra(AddEditPilActivity.EXTRA_INNAMEN, medication.getInnamen());
                             startActivity(intent);
                             return true;
                         };

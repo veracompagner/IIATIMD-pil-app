@@ -11,6 +11,8 @@ public class Medication {
     private String name;
     @ColumnInfo
     private String beschrijving;
+    @ColumnInfo
+    private String innamen;
     @PrimaryKey(autoGenerate = true)
     private int uuid;
 
@@ -23,9 +25,10 @@ public class Medication {
 
      */
 
-    public Medication(String name, String beschrijving) {
+    public Medication(String name, String beschrijving, String innamen) {
         this.name = name;
         this.beschrijving = beschrijving;
+        this.innamen = innamen;
     }
 
     public String getName(){
@@ -34,6 +37,10 @@ public class Medication {
 
     public String getBeschrijving(){
         return beschrijving;
+    }
+
+    public String getInnamen(){
+        return innamen;
     }
 
     public int getUuid(){

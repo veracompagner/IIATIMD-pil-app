@@ -22,7 +22,8 @@ public class FaqFragment extends Fragment {
     }
 
     //hard code
-    String s1[], s2[];
+    String s1[];
+    String s2[];
 
 
     @Nullable

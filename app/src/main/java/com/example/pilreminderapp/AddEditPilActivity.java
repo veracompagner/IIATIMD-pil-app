@@ -18,10 +18,13 @@ public class AddEditPilActivity extends AppCompatActivity {
             "com.example.pilreminderapp.EXTRA_NAME";
     public static final String EXTRA_BESCHRIJVING =
             "com.example.pilreminderapp.EXTRA_BESCHRIJVING";
+    public static final String EXTRA_INNAMEN =
+            "com.example.pilreminderapp.EXTRA_INNAMEN";
 
 
     private EditText editTextName;
     private EditText editTextBeschrijving;
+    private EditText editTextInnamen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,7 @@ public class AddEditPilActivity extends AppCompatActivity {
 
         editTextName = findViewById(R.id.edit_text_name);
         editTextBeschrijving = findViewById(R.id.edit_text_beschrijving);
+        editTextInnamen = findViewById(R.id.edit_text_innamen);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
@@ -38,6 +42,7 @@ public class AddEditPilActivity extends AppCompatActivity {
             setTitle("Bewerken");
             editTextName.setText(intent.getStringExtra(EXTRA_NAME));
             editTextBeschrijving.setText(intent.getStringExtra(EXTRA_BESCHRIJVING));
+            editTextInnamen.setText(intent.getStringExtra(EXTRA_INNAMEN));
         }
         else {
             setTitle("Voeg pil toe");
@@ -47,6 +52,7 @@ public class AddEditPilActivity extends AppCompatActivity {
     private void savePil(){
         String name = editTextName.getText().toString();
         String beschrijving = editTextBeschrijving.getText().toString();
+        String innamen = editTextInnamen.getText().toString();
 
         if(name.trim().isEmpty() || beschrijving.trim().isEmpty()){
             Toast.makeText(this, "Ongeldige invoer", Toast.LENGTH_SHORT).show();
@@ -56,6 +62,7 @@ public class AddEditPilActivity extends AppCompatActivity {
         Intent data = new Intent();
         data.putExtra(EXTRA_NAME, name);
         data.putExtra(EXTRA_BESCHRIJVING, beschrijving);
+        data.putExtra(EXTRA_INNAMEN, innamen);
 
         int uuid = getIntent().getIntExtra(EXTRA_UUID, -1);
         if(uuid != -1){

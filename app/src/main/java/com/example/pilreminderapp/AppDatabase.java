@@ -10,7 +10,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Medication.class}, version = 1)
+@Database(entities = {Medication.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;
@@ -44,12 +44,12 @@ public abstract class AppDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids){
-            medicationDAO.insert(new Medication("Antibiotica", "Beschrijving hier"));
-            medicationDAO.insert(new Medication("Anticonceptie", "Beschrijving hier"));
-            medicationDAO.insert(new Medication("Omega 3", "Beschrijving hier"));
-            medicationDAO.insert(new Medication("Vitamine B", "Beschrijving hier"));
-            medicationDAO.insert(new Medication("Vitamine D", "Beschrijving hier"));
-            medicationDAO.insert(new Medication("Zink", "Beschrijving hier"));
+            medicationDAO.insert(new Medication("Antibiotica", "Dose: 1", "Dagelijks"));
+            medicationDAO.insert(new Medication("Anticonceptie", "Dose: 1", "Dagelijks"));
+            medicationDAO.insert(new Medication("Omega 3", "Dose: 1", "Dagelijks"));
+            medicationDAO.insert(new Medication("Vitamine B", "Dose: 1", "Dagelijks"));
+            medicationDAO.insert(new Medication("Vitamine D", "Dose: 1", "Dagelijks"));
+            medicationDAO.insert(new Medication("Zink", "Dose: 1", "Dagelijks"));
             return null;
         }
     }
