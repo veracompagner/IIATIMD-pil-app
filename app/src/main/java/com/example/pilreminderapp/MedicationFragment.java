@@ -4,14 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -27,62 +24,27 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class PiloverzichtFragment extends Fragment {
-
+public class MedicationFragment extends Fragment {
 
     Context context;
 
-    public PiloverzichtFragment(Context ct) {
+    public MedicationFragment(Context ct) {
         context = ct;
     }
 
-    private MedicationViewModel medicationViewModel;
+    public static MedicationViewModel medicationViewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_pil_overzicht, container, false);
-
-        ActivityResultLauncher<Intent> addEditActivityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK) {
-                            Intent data = result.getData();
-                            String name = data.getStringExtra(AddEditPilActivity.EXTRA_NAME);
-                            String beschrijving = data.getStringExtra(AddEditPilActivity.EXTRA_BESCHRIJVING);
-                            int herhaal = data.getIntExtra(AddEditPilActivity.EXTRA_HERHAAL, 0);
-
-                            Medication medication = new Medication (name, beschrijving, herhaal);
-                            medicationViewModel.insert(medication);
-                            Toast.makeText(getActivity(), "Pil toegevoegd", Toast.LENGTH_SHORT).show();
-                        } else if (result.getResultCode() == Activity.RESULT_OK) {
-                            Intent data = result.getData();
-                            int uuid = data.getIntExtra(AddEditPilActivity.EXTRA_UUID, -1);
-                            if (uuid == -1) {
-                                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                            String name = data.getStringExtra(AddEditPilActivity.EXTRA_NAME);
-                            String beschrijving = data.getStringExtra(AddEditPilActivity.EXTRA_BESCHRIJVING);
-                            int herhaal = data.getIntExtra(AddEditPilActivity.EXTRA_HERHAAL, 0);
-
-                            Medication medication = new Medication(name, beschrijving, herhaal);
-                            medication.setUuid(uuid);
-                            medicationViewModel.update(medication);
-                            Toast.makeText(getActivity(), "Succesvol bijgewerkt", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
         FloatingActionButton buttonAddPil = view.findViewById(R.id.button_add_pil);
         buttonAddPil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AddEditPilActivity.class);
-                addEditActivityResultLauncher.launch(intent);
+                Medication medication = new Medication();
+                openMedicationActivity(medication, true);
             }
         });
 
@@ -97,7 +59,6 @@ public class PiloverzichtFragment extends Fragment {
         medicationViewModel.getAllMedication().observe(getViewLifecycleOwner(), new Observer<List<Medication>>() {
             @Override
             public void onChanged(@Nullable List<Medication> medications) {
-                //adapter.notifyDataSetChanged();
                 adapter.submitList(medications);
             }
 
@@ -106,12 +67,7 @@ public class PiloverzichtFragment extends Fragment {
         adapter.setOnItemClickListener(new MedicationAdapter.OnItemClickListener() {
             @Override
             public boolean onItemClick(Medication medication) {
-                Intent intent = new Intent(getActivity(), SecondActivity.class);
-                intent.putExtra("data1", medication.getName());
-                intent.putExtra("data2", medication.getBeschrijving());
-                intent.putExtra("data4",medication.getHerhaal());
-                intent.putExtra("uuid", medication.getUuid());
-                startActivity(intent);
+                openMedicationActivity(medication, false);
                 return false;
             }
         });
@@ -131,5 +87,13 @@ public class PiloverzichtFragment extends Fragment {
         }).attachToRecyclerView(recyclerView);
 
         return view;
-        }
     }
+
+    public void openMedicationActivity(Medication medication, boolean createNew){
+        Intent intent = new Intent(getActivity(), MedicationActivity.class);
+        intent.putExtra("medication", medication);
+        intent.putExtra("createNew", createNew);
+        startActivity(intent);
+    }
+
+}

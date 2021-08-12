@@ -13,10 +13,10 @@ import java.util.List;
 public interface MedicationDAO {
 
     @Insert
-    void insert(Medication pillen);
+    void insert(Medication medication);
 
     @Update
-    void update(Medication pillen);
+    void update(Medication medication);
 
     @Delete
     void delete(Medication medication);

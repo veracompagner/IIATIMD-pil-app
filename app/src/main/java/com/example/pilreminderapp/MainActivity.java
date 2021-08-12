@@ -1,20 +1,9 @@
 package com.example.pilreminderapp;
 
-import android.app.AlarmManager;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.RingtoneManager;
 import android.os.Build;
 import android.os.Bundle;
-
-import android.util.Log;
 
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,15 +11,10 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.room.Room;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.Calendar;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -48,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PiloverzichtFragment(this)).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MedicationFragment(this)).commit();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.titleTime);
@@ -64,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private PiloverzichtFragment setPiloverzichtFragment(){
-        PiloverzichtFragment piloverzichtFragment = new PiloverzichtFragment(this);
-        return piloverzichtFragment;
+    private MedicationFragment setPiloverzichtFragment(){
+        MedicationFragment medicationFragment = new MedicationFragment(this);
+        return medicationFragment;
     }
 
 
@@ -75,10 +59,7 @@ public class MainActivity extends AppCompatActivity {
         return faqFragment;
     }
 
-   /* private KalenderFragment setKalenderFragment(){
-        KalenderFragment kalenderFragment = new KalenderFragment(this);
-        return kalenderFragment;
-    }*/
+
 
 
 
@@ -110,9 +91,6 @@ public class MainActivity extends AppCompatActivity {
                     Fragment selectedFragment = null;
 
                     switch (item.getItemId()){
-                        //case R.id.nav_kalender:
-                          //  selectedFragment = setKalenderFragment();
-                           // break;
                         case R.id.nav_pil_overzicht:
                             selectedFragment = setPiloverzichtFragment();
                             break;

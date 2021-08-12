@@ -7,17 +7,15 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class MedicationViewModel extends AndroidViewModel {
 
     private MedicationRepository repository;
     private LiveData<List<Medication>> allMedication;
-
-    public interface LifecycleObserver{
-
-    };
 
     public MedicationViewModel(@NonNull Application application) {
         super(application);

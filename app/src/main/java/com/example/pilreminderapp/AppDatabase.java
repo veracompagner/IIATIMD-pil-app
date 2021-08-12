@@ -10,7 +10,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Medication.class}, version = 4)
+@Database(entities = {Medication.class}, version = 13, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;
@@ -20,6 +20,7 @@ public abstract class AppDatabase extends RoomDatabase {
         if(instance == null){
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     AppDatabase.class, "appdatabase")
+                    .allowMainThreadQueries()
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallBack)
                     .build();
@@ -44,12 +45,11 @@ public abstract class AppDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids){
-            medicationDAO.insert(new Medication("Antibiotica", "Dose: 1", 1));
-            medicationDAO.insert(new Medication("Anticonceptie", "Dose: 1", 1));
-            medicationDAO.insert(new Medication("Omega 3", "Dose: 1", 1));
-            medicationDAO.insert(new Medication("Vitamine B", "Dose: 1", 1));
-            medicationDAO.insert(new Medication("Vitamine D", "Dose: 1", 1));
-            medicationDAO.insert(new Medication("Zink", "Dose: 1", 1));
+            medicationDAO.insert(new Medication("Antibiotica", "Dose: 1", Medication.Repeat.DAILY,22,00, true));
+            medicationDAO.insert(new Medication("Anticonceptie", "Dose: 1", Medication.Repeat.DAILY,22,00,true));
+            medicationDAO.insert(new Medication("Omega 3", "Dose: 1", Medication.Repeat.DAILY,22,00,false));
+            medicationDAO.insert(new Medication("Vitamine D", "Dose: 1", Medication.Repeat.MONTHLY,22,00,false));
+            medicationDAO.insert(new Medication("Zink", "Dose: 1", Medication.Repeat.WEEKLY,22,00,false));
             return null;
         }
     }

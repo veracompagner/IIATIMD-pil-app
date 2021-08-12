@@ -4,5 +4,5 @@
     <item
         android:id="@+id/bewerk_pil"
         android:title="Bewerken"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
 </menu>

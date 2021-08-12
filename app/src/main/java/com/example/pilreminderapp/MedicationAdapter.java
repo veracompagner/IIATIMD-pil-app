@@ -1,10 +1,9 @@
 package com.example.pilreminderapp;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,9 +11,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MedicationAdapter extends ListAdapter<Medication, MedicationAdapter.MedicationViewHolder> {
 
@@ -33,24 +29,30 @@ public class MedicationAdapter extends ListAdapter<Medication, MedicationAdapter
         @Override
         public boolean areContentsTheSame(Medication oldItem, Medication newItem) {
             return oldItem.getName().equals(newItem.getName()) &&
-                    oldItem.getBeschrijving().equals(newItem.getBeschrijving());
+                    oldItem.getDose().equals(newItem.getDose());
         }
     };
-
 
     @NonNull
     @Override
     public MedicationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.medication_card, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.medication_card, parent, false);
         return new MedicationViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MedicationViewHolder holder, int position) {
         Medication currentMedication = getItem(position);
-        holder.textViewName.setText(currentMedication.getName());
-        holder.textViewBeschrijving.setText(currentMedication.getBeschrijving());
+        holder.nameTextView.setText(currentMedication.getName());
+        holder.doseTextView.setText(currentMedication.getDose());
+        if (currentMedication.getTimerEnabled()){
+            holder.timerImg.setImageResource(R.drawable.ic_baseline_notifications_active_24);
+        }
+        else{
+            holder.timerImg.setImageResource(R.drawable.ic_baseline_notifications_off_24);
+
+        }
+
     }
 
     public Medication getMedicationAt(int position){
@@ -58,16 +60,17 @@ public class MedicationAdapter extends ListAdapter<Medication, MedicationAdapter
     }
 
     class MedicationViewHolder extends RecyclerView.ViewHolder {
-        private TextView textViewName;
-        private TextView textViewBeschrijving;
+        private TextView nameTextView;
+        private TextView doseTextView;
+        private ImageView timerImg;
         ConstraintLayout mainLayout;
 
         public MedicationViewHolder(View view) {
             super(view);
-            textViewName = view.findViewById(R.id.MedicationName);
-            textViewBeschrijving = view.findViewById(R.id.beschrijving);
+            nameTextView = view.findViewById(R.id.MedicationName);
+            doseTextView = view.findViewById(R.id.dose);
             mainLayout = view.findViewById(R.id.mainLayout);
-
+            timerImg = view.findViewById(R.id.timerImg);
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
@@ -88,5 +91,4 @@ public class MedicationAdapter extends ListAdapter<Medication, MedicationAdapter
     public void setOnItemClickListener(OnItemClickListener listener){
         this.listener = listener;
     }
-
 }

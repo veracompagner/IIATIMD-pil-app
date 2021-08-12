@@ -32,7 +32,7 @@ public class ThirdActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        if ( getIntent().hasExtra("data1") && getIntent().hasExtra("data2")) {
+        if (getIntent().hasExtra("data1") && getIntent().hasExtra("data2")) {
 
             data1 = getIntent().getStringExtra("data1");
             data2 = getIntent().getStringExtra("data2");

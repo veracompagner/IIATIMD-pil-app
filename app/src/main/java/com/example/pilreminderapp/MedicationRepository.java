@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
+
 import java.util.List;
 
 public class MedicationRepository {
@@ -17,16 +18,16 @@ public class MedicationRepository {
         allMedication = medicationDAO.getAllMedication();
     }
 
-    public void insert(Medication pil){
-        new InsertMedicationAsyncTask(medicationDAO).execute(pil);
+    public void insert(Medication medication){
+        new InsertMedicationAsyncTask(medicationDAO).execute(medication);
     }
 
-    public void update(Medication pil){
-        new UpdateMedicationAsyncTask(medicationDAO).execute(pil);
+    public void update(Medication medication){
+        new UpdateMedicationAsyncTask(medicationDAO).execute(medication);
     }
 
-    public void delete(Medication pil){
-        new DeleteMedicationAsyncTask(medicationDAO).execute(pil);
+    public void delete(Medication medication){
+        new DeleteMedicationAsyncTask(medicationDAO).execute(medication);
     }
 
 
@@ -46,8 +47,8 @@ public class MedicationRepository {
         }
 
         @Override
-        protected Void doInBackground(Medication... pillen){
-            medicationDAO.insert(pillen[0]);
+        protected Void doInBackground(Medication... medication){
+            medicationDAO.insert(medication[0]);
             return null;
         }
     }
@@ -60,8 +61,8 @@ public class MedicationRepository {
         }
 
         @Override
-        protected Void doInBackground(Medication... pillen){
-            medicationDAO.update(pillen[0]);
+        protected Void doInBackground(Medication... medication){
+            medicationDAO.update(medication[0]);
             return null;
         }
     }
@@ -74,8 +75,8 @@ public class MedicationRepository {
         }
 
         @Override
-        protected Void doInBackground(Medication... pillen){
-            medicationDAO.delete(pillen[0]);
+        protected Void doInBackground(Medication... medication){
+            medicationDAO.delete(medication[0]);
             return null;
         }
     }

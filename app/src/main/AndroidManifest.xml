@@ -15,9 +15,8 @@
 
         <receiver android:name=".MyNotificationPublisher" />
 
-        <activity android:name=".AddEditPilActivity"></activity>
         <activity
-            android:name=".SecondActivity"
+            android:name=".MedicationActivity"
             android:label="Details"
             android:parentActivityName=".MainActivity" />
 
