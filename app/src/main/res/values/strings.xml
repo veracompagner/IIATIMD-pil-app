@@ -12,7 +12,6 @@
         <item>Antibiotica</item>
         <item>Vitamine B</item>
         <item>Vitamine D</item>
-
     </string-array>
 
     <string-array name="repeat_array">
@@ -20,8 +19,6 @@
         <item>Dagelijks</item>
         <item>Wekelijks</item>
         <item>Maandelijks</item>
-
-
     </string-array>
 
     <string-array name="question_names">
@@ -37,7 +34,6 @@
         <item>A 2</item>
         <item>A 3</item>
         <item>A 4</item>
-
     </string-array>
 
 

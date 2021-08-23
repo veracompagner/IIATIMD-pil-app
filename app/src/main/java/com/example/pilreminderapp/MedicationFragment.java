@@ -72,7 +72,6 @@ public class MedicationFragment extends Fragment {
             }
         });
 
-        // Werkt om de één of andere reden niet goed. Item komt weer terug na refres.
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override

@@ -12,55 +12,64 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder> {
 
-    String data1[], data2[];
+    //String data1[], data2[];
 
-    Context context1;
+    private List<Faq> faqList;
+    private Context context;
 
-    public QuestionAdapter(Context ct1, String s1[], String s2[]){
-        context1 = ct1;
-        data1 = s1;
-        data2 = s2;
+    public QuestionAdapter(Context context, List<Faq> faqList){
+        this.context = context;
+        this.faqList = faqList;
     }
 
     @NonNull
     @Override
     public QuestionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(context1);
+        LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.faq_card, parent, false);
         return new QuestionViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull QuestionViewHolder holder, int position) {
-        holder.text1.setText(data1[position]);
+        //holder.text1.setText(data1[position]);
+        Faq faq = faqList.get(position);
+        holder.question.setText(faq.getQuestion());
+        holder.answer.setText(faq.getAnswer());
 
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context1, ThirdActivity.class);
-                intent.putExtra("data1", data1[position]);
-                intent.putExtra("data2", data2[position]);
-                context1.startActivity(intent);
+                Intent intent = new Intent(context, ThirdActivity.class);
+                intent.putExtra("data1", faq.getQuestion());
+                intent.putExtra("data2", faq.getAnswer());
+                context.startActivity(intent);
             }
         });
     }
 
+    public void getAllFaqs(List<Faq> faqList){
+        this.faqList = faqList;
+    }
+
     @Override
     public int getItemCount() {
-        return data1.length;
+        return faqList.size();
     }
 
     public class QuestionViewHolder extends RecyclerView.ViewHolder {
 
-        TextView text1, text2;
+        TextView question, answer;
         ConstraintLayout mainLayout;
 
         public QuestionViewHolder(@NonNull View itemView){
             super(itemView);
-            text1 = itemView.findViewById(R.id.question);
-            text2 = itemView.findViewById(R.id.answer);
+            question = itemView.findViewById(R.id.questionTextView);
+            answer = itemView.findViewById(R.id.answerTextView);
             mainLayout = itemView.findViewById(R.id.mainLayout);
         }
     }

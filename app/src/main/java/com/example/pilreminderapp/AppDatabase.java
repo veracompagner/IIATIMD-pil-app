@@ -10,17 +10,17 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Medication.class}, version = 13, exportSchema = false)
+@Database(entities = {Medication.class, Faq.class}, version = 14, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;
     public abstract MedicationDAO medicationDAO();
+    public abstract FaqDAO faqDAO();
 
     public static synchronized AppDatabase getInstance(Context context){
         if(instance == null){
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     AppDatabase.class, "appdatabase")
-                    .allowMainThreadQueries()
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallBack)
                     .build();
@@ -38,9 +38,11 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void>{
         private MedicationDAO medicationDAO;
+        private FaqDAO faqDAO;
 
         private PopulateDbAsyncTask(AppDatabase db){
             medicationDAO = db.medicationDAO();
+            faqDAO = db.faqDAO();
         }
 
         @Override
@@ -50,7 +52,10 @@ public abstract class AppDatabase extends RoomDatabase {
             medicationDAO.insert(new Medication("Omega 3", "Dose: 1", Medication.Repeat.DAILY,22,00,false));
             medicationDAO.insert(new Medication("Vitamine D", "Dose: 1", Medication.Repeat.MONTHLY,22,00,false));
             medicationDAO.insert(new Medication("Zink", "Dose: 1", Medication.Repeat.WEEKLY,22,00,false));
+            faqDAO.deleteAll();
             return null;
         }
+
     }
+
 }

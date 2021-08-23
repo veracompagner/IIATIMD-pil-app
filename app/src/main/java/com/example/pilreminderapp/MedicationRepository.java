@@ -5,8 +5,8 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-
 import java.util.List;
+
 
 public class MedicationRepository {
     private MedicationDAO medicationDAO;
@@ -17,6 +17,7 @@ public class MedicationRepository {
         medicationDAO = database.medicationDAO();
         allMedication = medicationDAO.getAllMedication();
     }
+
 
     public void insert(Medication medication){
         new InsertMedicationAsyncTask(medicationDAO).execute(medication);
@@ -93,4 +94,5 @@ public class MedicationRepository {
             return null;
         }
     }
+
 }

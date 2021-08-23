@@ -124,6 +124,7 @@ public class MedicationActivity extends AppCompatActivity {
                 scheduleNotification(MedicationActivity.this, medication.getHour(), medication.getMinute(), repeat, medication.getUuid(), timerEnabled.isChecked());
 
                 enableEdit(false);
+                finish();
             }
         });
 
