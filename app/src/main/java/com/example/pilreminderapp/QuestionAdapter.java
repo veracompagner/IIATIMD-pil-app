@@ -45,7 +45,6 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ThirdActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("data1", faq.getQuestion());
                 intent.putExtra("data2", faq.getAnswer());
                 context.startActivity(intent);
