@@ -16,8 +16,6 @@ import java.util.List;
 
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder> {
 
-    //String data1[], data2[];
-
     private List<Faq> faqList;
     private Context context;
 
@@ -36,7 +34,6 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
 
     @Override
     public void onBindViewHolder(@NonNull QuestionViewHolder holder, int position) {
-        //holder.text1.setText(data1[position]);
         Faq faq = faqList.get(position);
         holder.question.setText(faq.getQuestion());
         holder.answer.setText(faq.getAnswer());

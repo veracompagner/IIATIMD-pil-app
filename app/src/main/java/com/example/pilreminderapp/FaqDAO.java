@@ -22,7 +22,4 @@ public interface FaqDAO {
     @Query("DELETE FROM faq_table")
     void deleteAll();
 
-    //@Query("SELECT * FROM faq_table")
-    //LiveData<List<Faq>> allFaqs();
-
 }

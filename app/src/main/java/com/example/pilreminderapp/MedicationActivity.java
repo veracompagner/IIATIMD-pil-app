@@ -42,7 +42,6 @@ public class MedicationActivity extends AppCompatActivity {
     private boolean editEnabled;
     private boolean createNew;
     private MedicationViewModel medicationViewModel;
-    // private MenuItem editMenuItem;
     private TimePickerDialog timePickerDialog;
 
     private Medication medication;
@@ -61,9 +60,6 @@ public class MedicationActivity extends AppCompatActivity {
         }
         editEnabled = enable;
 
-        //MenuItem item = menu.findItem(R.menu.bewerken_menu);
-        //MenuInflater menuInflater = getMenuInflater();
-        //menuInflater.inflate(R.menu.bewerken_menu, menu);
     }
 
     @Override
